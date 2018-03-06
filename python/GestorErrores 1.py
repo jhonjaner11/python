@@ -30,22 +30,24 @@ variables=[]
 
 
 def postfijo(lista):
+    print lista
     p=Pila()
     tam=len(lista)
-    variables=[]
     for x in range(tam):
         var=lista[x]
-        if (esNumero(var)==True):
-            p.apilar(int(lista[x]))
         if (esOperador(var)==True):
+            print var
             p.apilar(int(operar(lista[x],p.desapilar(),p.desapilar())))
-        #if (esVariable(var)==True):
-         #   pos=buscar(var)
-          # if esNumero(pos):
-           #     print "hola"
-          #      p.apilar(variables[pos+1])
-           # else:
-            #    return "Datos erroneos"
+        if (esVariable(var)==True):
+            pos=buscar(var)
+            var=int(variables[pos+1])
+            p.apilar(int(var))
+            print pos
+        else:
+            if (esNumero(var)==True):
+                p.apilar(int(var))
+        
+            
     return p.desapilar()
 
 def esOperador(v):
@@ -63,7 +65,9 @@ def esNumero(v):
     return v.isdigit()
 
 def esVariable(v):
-    return True
+    if (esNumero(v)==False):
+        if (esOperador(v)==False):
+            return True
 
     
 def operar(o, y, x):
